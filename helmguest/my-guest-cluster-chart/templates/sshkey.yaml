@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sshkey-cluster-{{ .Values.guestClustername }}
+  labels:
+   cluster-name: {{ .Values.guestClustername }}
+stringData:
+  id_rsa.pub: {{ .Values.sshkeyClusterMyHostedCluster.idRsaPub }}

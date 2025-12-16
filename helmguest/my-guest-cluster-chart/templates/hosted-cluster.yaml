@@ -1,0 +1,95 @@
+apiVersion: hypershift.openshift.io/v1beta1
+kind: HostedCluster
+metadata:
+  name: {{ .Values.guestClustername }}
+  labels:
+    cluster.open-cluster-management.io/clusterset: default
+spec:
+  controllerAvailabilityPolicy: {{ .Values.availabilityPolicy }}
+  etcd:
+    managed:
+      storage:
+        persistentVolume:
+          size: 8Gi
+        type: PersistentVolume
+    managementType: Managed
+  infraID: {{ .Values.guestClustername }}
+  infrastructureAvailabilityPolicy: {{ .Values.availabilityPolicy }}
+  networking:
+    clusterNetwork:
+    - cidr: 10.136.0.0/14
+    networkType: OVNKubernetes
+    serviceNetwork:
+    - cidr: 172.32.0.0/16
+  platform:
+    kubevirt:
+      baseDomainPassthrough: true
+      storageDriver:
+        manual:
+          storageClassMapping:
+          - guestStorageClassName: {{ .Values.guestStorageClassName }}
+            infraStorageClassName: {{ .Values.infraStorageClassName }}
+          volumeSnapshotClassMapping:
+          - guestVolumeSnapshotClassName: {{ .Values.guestVolumeSnapshotClassName }}
+            infraVolumeSnapshotClassName: {{ .Values.infraVolumeSnapshotClassName }}
+        type: Manual
+    type: KubeVirt
+  pullSecret:
+    name: pullsecret-cluster-{{ .Values.guestClustername}}
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:4.17.43-multi
+  services:
+  - service: OAuthServer
+    servicePublishingStrategy:
+      type: Route
+  - service: OIDC
+    servicePublishingStrategy:
+      type: Route
+  - service: Konnectivity
+    servicePublishingStrategy:
+      type: Route
+  - service: Ignition
+    servicePublishingStrategy:
+      type: Route
+  - service: APIServer
+    servicePublishingStrategy:
+      type: LoadBalancer
+  sshKey:
+    name: sshkey-cluster-{{ .Values.guestClustername}}
+---
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: {{ .Values.guestClustername }}
+  labels:
+    cloud: BareMetal
+    cluster.open-cluster-management.io/clusterset: default
+    name: {{ .Values.guestClustername }}
+    vendor: OpenShift
+  annotations:
+    import.open-cluster-management.io/hosting-cluster-name: local-cluster
+    import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
+    open-cluster-management/created-via: hypershift
+spec:
+  hubAcceptsClient: true
+# Uncomment following section when ACM is installed in Management Cluster
+#---
+#apiVersion: agent.open-cluster-management.io/v1
+#kind: KlusterletAddonConfig
+#metadata:
+#  name: {{ .Values.guestClustername }}
+#  namespace: {{ .Values.guestClustername }}
+#spec:
+#  applicationManager:
+#    enabled: true
+#  certPolicyController:
+#    enabled: true
+#  clusterLabels:
+#    cloud: BareMetal
+#    vendor: OpenShift
+#  clusterName: {{ .Values.guestClustername }}
+#  clusterNamespace: {{ .Values.guestClustername }}
+#  policyController:
+#    enabled: true
+#  searchCollector:
+#    enabled: true

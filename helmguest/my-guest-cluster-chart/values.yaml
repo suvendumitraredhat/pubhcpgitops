@@ -1,0 +1,12 @@
+kubernetesClusterDomain: cluster.local
+pullsecretClusterMyHostedCluster:
+  dockerconfigjson: #add your pull secret base64 encoded
+sshkeyClusterMyHostedCluster:
+  idRsaPub: # add ssh key
+guestClustername: my-hosted-cluster
+
+availabilityPolicy: SingleReplica # change this to 'SingleReplica' for SNO and 'HighlyAvailable' for cluster
+guestStorageClassName: ocs-storagecluster-ceph-rbd 
+infraStorageClassName: ocs-external-storagecluster-ceph-rbd
+guestVolumeSnapshotClassName: ocs-storagecluster-rbdplugin-snapclass
+infraVolumeSnapshotClassName: ocs-external-storagecluster-rbdplugin-snapclass

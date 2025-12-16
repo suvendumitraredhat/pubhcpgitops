@@ -1,16 +1,22 @@
 This repository contains the files to deploy Hosted Cluster in Openshift Hosted Control Plane setup
 ## 📂 Project Structure
 ```bash
-helmguest/
-└── my-guest-cluster-chart
-    ├── Chart.yaml
-    ├── templates
-    │   ├── clusters.yaml
-    │   ├── hosted-cluster.yaml
-    │   ├── node-pool.yaml
-    │   ├── pullsecret.yaml
-    │   └── sshkey.yaml
-    └── values.yaml
+.
+├── argo
+│   ├── argoapp.yaml
+│   ├── management-gitops-hypershift-rhacm_rolebinding.yaml
+│   └── management-gitops-hypershift-rhacm.yaml
+├── helmguest
+│   └── my-guest-cluster-chart
+│       ├── Chart.yaml
+│       ├── templates
+│       │   ├── clusters.yaml
+│       │   ├── hosted-cluster.yaml
+│       │   ├── node-pool.yaml
+│       │   ├── pullsecret.yaml
+│       │   └── sshkey.yaml
+│       └── values.yaml
+└── README.md
 ```
 ### values.yaml
 ```bash

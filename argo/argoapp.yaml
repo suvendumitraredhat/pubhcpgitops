@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestcluster
+spec:
+  destination:
+    namespace: clusters
+    server: https://kubernetes.default.svc
+  source:
+    path: helmguest/my-guest-cluster-chart
+    repoURL: https://github.com/suvendumitraredhat/pubhcpgitops.git
+    targetRevision: HEAD
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      enabled: true

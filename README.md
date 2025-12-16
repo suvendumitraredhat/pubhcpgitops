@@ -12,7 +12,7 @@ helmguest/
     │   └── sshkey.yaml
     └── values.yaml
 ```
-## values.yaml
+### values.yaml
 ```bash
 dockerconfigjson: # Add your base64 encoded pull secret
 idRsaPub: # Add your ssh public key
@@ -22,7 +22,7 @@ infraStorageClassName: # Management Cluster storage class name (support RWX)
 guestVolumeSnapshotClassName: # Hosted Cluster storage snapshot class name
 infraVolumeSnapshotClassName: # Management Cluster storage snapshot class name
 ```
-## hosted-cluster.yaml
+### hosted-cluster.yaml
 Uncomment following section when ACM is installed in Management Cluster
 ```bash
 #---

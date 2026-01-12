@@ -19,5 +19,5 @@ spec:
         type: Persistent
     type: KubeVirt
   release:
-    image: quay.io/openshift-release-dev/ocp-release:4.19.21-multi
+    image: quay.io/openshift-release-dev/ocp-release:4.20.8-multi
   replicas: 2

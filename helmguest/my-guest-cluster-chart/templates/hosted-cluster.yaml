@@ -37,7 +37,7 @@ spec:
   pullSecret:
     name: pullsecret-cluster-{{ .Values.guestClustername}}
   release:
-    image: quay.io/openshift-release-dev/ocp-release:4.17.43-multi
+    image: quay.io/openshift-release-dev/ocp-release:4.20.8-multi
   services:
   - service: OAuthServer
     servicePublishingStrategy:
